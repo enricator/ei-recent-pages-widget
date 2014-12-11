@@ -53,6 +53,7 @@ if ( ! class_exists( 'ei_Recent_Pages_Widget' ) ) {
 	    
 	    function widget( $args, $instance ) {
 	        extract($args);
+			$num_pages = $instance['numpages'];
 	        echo $before_widget;
 	        echo $before_title.$instance['title'].$after_title;
 	 
@@ -62,7 +63,7 @@ if ( ! class_exists( 'ei_Recent_Pages_Widget' ) ) {
 			<div class="paginerecenti">
 			  <?php 
 				   $args=array(
-				   'showposts'=> 5,
+				   'showposts'=> $num_pages,
 				   'post_type' => 'page',
 				   'caller_get_posts'=> 1
 				   );
@@ -87,12 +88,26 @@ if ( ! class_exists( 'ei_Recent_Pages_Widget' ) ) {
 	        echo $after_widget;
 	    }
 	    function update( $new_instance, $old_instance ) {
-	        return $new_instance;
+	        $instance = $old_instance;
+			// Fields
+			$instance['title'] = strip_tags($new_instance['title']);
+			$instance['numpages'] = intval($new_instance['numpages']);
+			return $instance;
 	    }
 	    function form( $instance ) {
-	        $title = esc_attr($instance['title']); ?>
+	    	if( $instance) {
+				$title = esc_attr($instance['title']);
+				$numpages = intval($instance['numpages']);
+			} else {
+				$title = 'Titolo';
+				$numpages = intval($this->settings['numRecPages']['default']);
+			}
+	        ?>
 	        <p><label for="<?php echo $this->get_field_id('title');?>">
 	        Titolo: <input class="widefat" id="<?php echo $this->get_field_id('title');?>" name="<?php echo $this->get_field_name('title');?>" type="text" value="<?php echo $title; ?>" />
+	        </label></p>
+	        <p><label for="<?php echo $this->get_field_id('numpages');?>">
+	        Pagine da visualizzare: <input class="widefat" id="<?php echo $this->get_field_id('numpages');?>" name="<?php echo $this->get_field_name('numpages');?>" type="text" value="<?php echo $numpages; ?>" />
 	        </label></p>
 	        <?php
 	    }
