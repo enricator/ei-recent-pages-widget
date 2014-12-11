@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Recent Pages Widget
+Plugin Name: ei Recent Pages Widget
 Plugin URI: https://github.com/enricator/ei-recent-pages-widget
 Description: A very simple widget that shows recent pages as a list.
 Version: 0.0.2
@@ -45,10 +45,6 @@ if ( ! class_exists( 'ei_Recent_Pages_Widget' ) ) {
 		
 	    function ei_recent_pages_widget() {
 	        parent::__construct( false, 'ei Recent Pages Widget' );
-			
-			//if ( is_admin() ) {
-			//	add_action( 'admin_init', array( &$this, 'settings' ) );
-			//}
 	    }
 	    
 	    function widget( $args, $instance ) {
